@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
     body,
     #root {
         height: 100vh;
-        background-color: #FFF;
+        background-color: #fff;
         flex: 1;
     }
 `;
