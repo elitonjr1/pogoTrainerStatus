@@ -1,21 +1,28 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import { Router, Link } from "@reach/router"
+import { Router, Link, Redirect } from "@reach/router"
+import Login from './views/auth/login';
+import Register from './views/auth/register';
+import Dashboard from './views/dashboard';
+import Views from "./views/portal";
+import { isAuth } from "./config/storage";
 
 
-import Home from "./views/home";
-import Layout from "./components/layout/index";
-import Views from "./views";
+const PrivateRoute = ({ component : Component, ...rest}) => {
+    if(!isAuth()){
+        return <Redirect to="/login" noThrow />
+    }
 
-const Page1 = () => <div>Page1</div>
-const Login = () => <div>Login</div>
-const Sobre = () => <div>Sobre</div>
+    return <Component {...rest} />
+}
 
 const Routers = () => {
     return (        
         <Router>
-            <Views path="/*"></Views>            
-            <Login path="login" />
+            <Views path="/*"></Views>
+            <Login path="/login/*" />
+            <Register path="/register/*" />
+            <PrivateRoute component={Dashboard} path="/dashboard/*" />
         </Router>        
     )
 }
